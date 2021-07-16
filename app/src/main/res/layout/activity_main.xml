@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:layout_marginTop="80dp"
+        android:textColor="@color/design_default_color_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:hint="email"
+        android:inputType="textEmailAddress"
+        android:layout_centerInParent="true"
+        android:id="@+id/login_mail"
+      />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:id="@+id/login_password"
+        android:layout_below="@id/login_mail"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/forgot_password"
+        android:layout_marginTop="6dp"
+        android:layout_height="wrap_content"
+        android:text="Forgot password?"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/login_password"
+    />
+    <Button
+
+        android:layout_width="wrap_content"
+        android:id="@+id/login_btn"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_below="@id/forgot_password"
+        android:layout_centerHorizontal="true"
+    />
+    <TextView
+        android:id="@+id/need_an_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dont have an account?Register"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/login_btn"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+    />
+</RelativeLayout>

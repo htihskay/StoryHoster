@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "382891469614",
+    "project_id": "fir-storyhoster",
+    "storage_bucket": "fir-storyhoster.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382891469614:android:4f2cec9bff1cecb74ee8bf",
+        "android_client_info": {
+          "package_name": "com.example.storyhoster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382891469614-dih6i6225fa43hnstbk88dek3kvvakvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.storyhoster",
+            "certificate_hash": "973f2dd75ea74716675c096a5795567b9c7d9b6f"
+          }
+        },
+        {
+          "client_id": "382891469614-8dqj5ht2jv90co033cb2rlsf4odjd2hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZncyytmYh3F8fPz4ShEGvPEyoJlhk528"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382891469614-8dqj5ht2jv90co033cb2rlsf4odjd2hs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
