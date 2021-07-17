@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.storyhoster.Model.PostModel;
 import com.example.storyhoster.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
@@ -38,9 +40,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
         String title=postModelList.get(position).getpTitle();
         String description=postModelList.get(position).getpDescription();
 
+
+
+
+        String timedate=postModelList.get(position).getpTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString = formatter.format(new Date(Long.parseLong(timedate)));
+
+
+
         holder.postTitle.setText(title);
 
         holder.postDescription.setText(description);
+
+        holder.postTime.setText(dateString);
+
 
         //pending library to load the image
 
@@ -53,13 +67,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder{
 
-        TextView postTitle,postDescription;
+        TextView postTitle,postDescription,postTime;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
             postTitle=itemView.findViewById(R.id.postTitle);
             postDescription=itemView.findViewById(R.id.postDescription);
+            postTime=itemView.findViewById(R.id.postTime);
         }
     }
 }

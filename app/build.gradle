@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     //image picker
+
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     //dexter library to get permission for camer etc
     implementation 'com.karumi:dexter:6.2.3'

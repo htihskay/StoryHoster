@@ -1,15 +1,26 @@
 package com.example.storyhoster.Model;
 
 public class PostModel {
-    String pTitle,pDescription;
+    String pTitle,pDescription,pTime;
 
     public PostModel() {
     }
 
-    public PostModel(String pTitle, String pDescription) {
+    public String getpTime() {
+        return pTime;
+    }
+
+    public void setpTime(String pTime) {
+        this.pTime = pTime;
+    }
+
+    public PostModel(String pTitle, String pDescription, String pTime) {
         this.pTitle = pTitle;
         this.pDescription = pDescription;
+        this.pTime=pTime;
     }
+
+
 
     public String getpTitle() {
         return pTitle;
