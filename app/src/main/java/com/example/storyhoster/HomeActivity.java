@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
        }
 
         if(item.getItemId()==R.id.action_add_post){
-            startActivity(new Intent(HomeActivity.this,TestingActivity.class));
+            startActivity(new Intent(HomeActivity.this,AddPostActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

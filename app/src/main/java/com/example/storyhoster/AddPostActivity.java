@@ -62,12 +62,6 @@ public class AddPostActivity extends AppCompatActivity {
 
 
 
-        ActionBar actionBar=getActionBar();
-
-        actionBar.setTitle("Add Post");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
 
 
         //permission();
