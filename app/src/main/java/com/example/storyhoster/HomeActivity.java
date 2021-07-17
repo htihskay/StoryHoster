@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     postModelList.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzz"+ds);
+                    System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzz "+ds);
                     PostModel postModel=ds.getValue(PostModel.class);
                     postModelList.add(postModel);
                     postAdapter =new PostAdapter(HomeActivity.this,postModelList);
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
        }
 
         if(item.getItemId()==R.id.action_add_post){
-            startActivity(new Intent(HomeActivity.this,TestingActivity.class));
+            startActivity(new Intent(HomeActivity.this,AddPostActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

@@ -14,7 +14,7 @@
         <EditText
             android:layout_width="match_parent"
             android:gravity="start"
-            android:hint="Title"
+            android:hint="Titlee"
             android:id="@+id/title_blog"
             android:layout_height="wrap_content"
             />

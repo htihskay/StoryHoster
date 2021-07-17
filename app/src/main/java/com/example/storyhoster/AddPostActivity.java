@@ -21,9 +21,11 @@ import android.view.View;
 import android.webkit.PermissionRequest;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -50,7 +52,8 @@ public class AddPostActivity extends AppCompatActivity {
 
     EditText title_blog,description_blog;
     Button upload;
-    ImageView blog_image;
+    ImageButton blog_image;
+    Uri blog_image_uri;
     ProgressDialog pd;
     FirebaseAuth auth;
 
@@ -58,17 +61,6 @@ public class AddPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_post);
-
-
-
-
-        ActionBar actionBar=getActionBar();
-
-        actionBar.setTitle("Add Post");
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-
 
         //permission();
         title_blog=findViewById(R.id.title_blog);
@@ -79,7 +71,17 @@ public class AddPostActivity extends AppCompatActivity {
 
         auth=FirebaseAuth.getInstance();
 
-
+        //uploading image
+        blog_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(AddPostActivity.this)
+                        .crop(4f, 3f)	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
         //when user click on upload button upload the data to firebase
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,14 +96,14 @@ public class AddPostActivity extends AppCompatActivity {
                     description_blog.setError("Description is required");
                 }
                 else {
-                    uploadData(title , description);
+                    uploadData(title ,blog_image_uri, description);
                 }
             }
         });
 
     }
 
-    private void uploadData(String title, String description) {
+    private void uploadData(String title,Uri image ,String description) {
         pd.setMessage("Publishing Post");
         pd.show();
         final String timeStamp= String.valueOf(System.currentTimeMillis());
@@ -118,7 +120,7 @@ public class AddPostActivity extends AppCompatActivity {
         hashMap.put("uEmail" , user.getEmail());
         hashMap.put("pId" , timeStamp);
         hashMap.put("pTitle" , title);
-        //  hashMap.put("pImage" , downloadUri);
+        hashMap.put("pImage" , image);
         hashMap.put("pDescription" , description);
         hashMap.put("pTime" ,  timeStamp);
 
@@ -151,4 +153,12 @@ public class AddPostActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri= data.getData();
+        blog_image_uri = uri;
+        blog_image.setImageURI(uri);
+        System.out.println(uri);
+    }
 }
