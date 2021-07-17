@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".AddPostActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
 
         <EditText
             android:id="@+id/description_blog"
-            android:minHeight="300dp"
+            android:minHeight="250dp"
             android:gravity="start"
             android:hint="Write your story..."
             android:inputType="textCapSentences|textMultiLine"
