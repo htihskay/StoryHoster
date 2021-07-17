@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     postModelList.clear();
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzz"+ds);
+                    System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzz "+ds);
                     PostModel postModel=ds.getValue(PostModel.class);
                     postModelList.add(postModel);
                     postAdapter =new PostAdapter(HomeActivity.this,postModelList);

@@ -20,11 +20,12 @@
             android:layout_height="wrap_content"
             />
 
-        <ImageView
+        <ImageButton
             android:background="@color/design_default_color_primary"
             android:layout_width="match_parent"
             android:scaleType="fitXY"
             android:minHeight="200dp"
+            android:src="@drawable/add_image_icon"
             android:layout_height="wrap_content"
             android:id="@+id/post_image_blog"
             />

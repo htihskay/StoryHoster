@@ -8,9 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.example.storyhoster"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
+        multiDexEnabled true
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -38,13 +39,15 @@ dependencies {
     //here we added the storage and real time synching of the data in our app
     implementation 'com.google.firebase:firebase-database:20.0.0'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'org.jetbrains:annotations:15.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation platform('com.google.firebase:firebase-bom:28.2.1')
     implementation 'com.google.firebase:firebase-analytics'
 
-
+    //image picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
     //dexter library to get permission for camer etc
     implementation 'com.karumi:dexter:6.2.3'
 }
