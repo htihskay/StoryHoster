@@ -1,34 +1,24 @@
 package com.example.storyhoster;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.Manifest;
-import android.app.ActionBar;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.webkit.PermissionRequest;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,17 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.List;
 
 public class AddPostActivity extends AppCompatActivity {
 
@@ -56,6 +37,9 @@ public class AddPostActivity extends AppCompatActivity {
     Uri blog_image_uri;
     ProgressDialog pd;
     FirebaseAuth auth;
+
+    //image upload
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +54,10 @@ public class AddPostActivity extends AppCompatActivity {
         pd=new ProgressDialog(this);
 
         auth=FirebaseAuth.getInstance();
+
+        //image upload
+        storageReference= FirebaseStorage.getInstance().getReference();
+
 
         //uploading image
         blog_image.setOnClickListener(new View.OnClickListener() {
@@ -104,10 +92,42 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void uploadData(String title,Uri image ,String description) {
+
+
         pd.setMessage("Publishing Post");
         pd.show();
         final String timeStamp= String.valueOf(System.currentTimeMillis());
         String filepath="Posts/"+"post_"+timeStamp;
+
+
+
+        //Uploading the image using one seperate storage reference ..
+
+        StorageReference imgupload=storageReference.child(filepath);
+
+        //now im using the  uri to upload;
+        imgupload.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imgupload.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            //HashMap<String , Object> hashMap = new HashMap<>();
+                           // hashMap.put("pImage",uri);
+                            Toast.makeText(AddPostActivity.this,"Image uploaded",Toast.LENGTH_LONG).show();
+                            Log.d("tag","Success Uploaded Image"+uri.toString());
+
+                        }
+                    });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddPostActivity.this,"Image upload failed",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         //uri is recieved post is publised to database
 
@@ -120,7 +140,7 @@ public class AddPostActivity extends AppCompatActivity {
         hashMap.put("uEmail" , user.getEmail());
         hashMap.put("pId" , timeStamp);
         hashMap.put("pTitle" , title);
-        hashMap.put("pImage" , image);
+        hashMap.put("pImage","post_"+timeStamp);
         hashMap.put("pDescription" , description);
         hashMap.put("pTime" ,  timeStamp);
 
@@ -159,6 +179,6 @@ public class AddPostActivity extends AppCompatActivity {
         Uri uri= data.getData();
         blog_image_uri = uri;
         blog_image.setImageURI(uri);
-        System.out.println(uri);
+        System.out.println("ZCXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+uri);
     }
 }
