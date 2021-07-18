@@ -44,7 +44,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyHolder> {
 
         //getting image;
         String image=postModelList.get(position).getpImage();
-
+        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWW"+image);
 
         String timedate=postModelList.get(position).getpTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

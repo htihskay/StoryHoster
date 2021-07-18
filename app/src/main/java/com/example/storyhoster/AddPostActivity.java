@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -109,16 +110,52 @@ public class AddPostActivity extends AppCompatActivity {
         imgupload.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    imgupload.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            //HashMap<String , Object> hashMap = new HashMap<>();
-                           // hashMap.put("pImage",uri);
-                            Toast.makeText(AddPostActivity.this,"Image uploaded",Toast.LENGTH_LONG).show();
-                            Log.d("tag","Success Uploaded Image"+uri.toString());
 
-                        }
-                    });
+                    Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
+
+                    while (!uriTask.isSuccessful());
+                String downloadUri = uriTask.getResult().toString();
+                    if(uriTask.isSuccessful()){
+                        FirebaseUser user = auth.getCurrentUser();
+
+                        HashMap<String , Object> hashMap = new HashMap<>();
+
+                        hashMap.put("uid" , user.getUid());
+                        hashMap.put("uEmail" , user.getEmail());
+                        hashMap.put("pId" , timeStamp);
+                        hashMap.put("pTitle" , title);
+                        hashMap.put("pImage",downloadUri);
+                        hashMap.put("pDescription" , description);
+                        hashMap.put("pTime" ,  timeStamp);
+
+                        //now we will pust the data to firebase database
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+                        ref.child(timeStamp).setValue(hashMap)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        pd.dismiss();;
+                                        Toast.makeText(AddPostActivity.this, "Post Published", Toast.LENGTH_SHORT).show();
+                                        title_blog.setText("");
+                                        description_blog.setText("");
+                                        blog_image.setImageURI(null);
+
+
+                                        //when post is publised user must go to home activity means main dashboad
+                                        startActivity(new Intent(AddPostActivity.this , HomeActivity.class));
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                pd.dismiss();
+                                Toast.makeText(AddPostActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -132,43 +169,7 @@ public class AddPostActivity extends AppCompatActivity {
         //uri is recieved post is publised to database
 
         //now we will upload the data to firebase database for
-        FirebaseUser user = auth.getCurrentUser();
-
-        HashMap<String , Object> hashMap = new HashMap<>();
-
-        hashMap.put("uid" , user.getUid());
-        hashMap.put("uEmail" , user.getEmail());
-        hashMap.put("pId" , timeStamp);
-        hashMap.put("pTitle" , title);
-        hashMap.put("pImage","post_"+timeStamp);
-        hashMap.put("pDescription" , description);
-        hashMap.put("pTime" ,  timeStamp);
-
-        //now we will pust the data to firebase database
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
-        ref.child(timeStamp).setValue(hashMap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        pd.dismiss();;
-                        Toast.makeText(AddPostActivity.this, "Post Published", Toast.LENGTH_SHORT).show();
-                        title_blog.setText("");
-                        description_blog.setText("");
-                        blog_image.setImageURI(null);
-
-
-                        //when post is publised user must go to home activity means main dashboad
-                        startActivity(new Intent(AddPostActivity.this , HomeActivity.class));
-
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
-                Toast.makeText(AddPostActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            //after pase here
 
 
     }
