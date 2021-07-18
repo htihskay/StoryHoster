@@ -112,8 +112,11 @@ public class AddPostActivity extends AppCompatActivity {
                     imgupload.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            //HashMap<String , Object> hashMap = new HashMap<>();
+                           // hashMap.put("pImage",uri);
                             Toast.makeText(AddPostActivity.this,"Image uploaded",Toast.LENGTH_LONG).show();
                             Log.d("tag","Success Uploaded Image"+uri.toString());
+
                         }
                     });
             }
@@ -137,7 +140,7 @@ public class AddPostActivity extends AppCompatActivity {
         hashMap.put("uEmail" , user.getEmail());
         hashMap.put("pId" , timeStamp);
         hashMap.put("pTitle" , title);
-
+        hashMap.put("pImage","post_"+timeStamp);
         hashMap.put("pDescription" , description);
         hashMap.put("pTime" ,  timeStamp);
 

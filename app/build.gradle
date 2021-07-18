@@ -51,5 +51,12 @@ dependencies {
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     //dexter library to get permission for camer etc
     implementation 'com.karumi:dexter:6.2.3'
+
+
+    //Glide libary from git hub to load the image on the mobile scree
+    dependencies {
+        implementation 'com.github.bumptech.glide:glide:4.12.0'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    }
 }
 apply plugin: 'com.google.gms.google-services'

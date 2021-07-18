@@ -1,10 +1,39 @@
 package com.example.storyhoster.Model;
 
 public class PostModel {
-    String pTitle,pDescription,pTime;
+    String pTitle;
+    String pDescription;
+    String pTime;
+    String pImage;
+
+
+
+
+
 
     public PostModel() {
     }
+
+    //here added setter and getter method to get the image from the firebase--on sunday before lunch;
+
+
+
+
+    public PostModel(String pTitle, String pDescription, String pTime,String pImage) {
+        this.pTitle = pTitle;
+        this.pDescription = pDescription;
+        this.pTime=pTime;
+        this.pImage=pImage;
+    }
+
+    public String getpImage() {
+        return pImage;
+    }
+
+    public void setpImage(String pImage) {
+        this.pImage = pImage;
+    }
+
 
     public String getpTime() {
         return pTime;
@@ -14,11 +43,6 @@ public class PostModel {
         this.pTime = pTime;
     }
 
-    public PostModel(String pTitle, String pDescription, String pTime) {
-        this.pTitle = pTitle;
-        this.pDescription = pDescription;
-        this.pTime=pTime;
-    }
 
 
 
